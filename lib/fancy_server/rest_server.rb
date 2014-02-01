@@ -25,8 +25,8 @@ module FancyServer
           context.response
         end
 
-        def run
-          Rack::Handler::WEBrick.run(self)
+        def run(options = {})
+          Rack::Handler::WEBrick.run(self, options)
         end
       end
     end
