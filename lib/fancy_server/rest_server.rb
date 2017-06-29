@@ -35,9 +35,10 @@ module FancyServer
       def initialize(env)
         @request  = Rack::Request.new(env)
         @params   = @request.params.dup
+        @request_body = @request.env['rack.input'].read
         @response = Rack::Response.new()
       end
-      attr_reader :request, :params, :response
+      attr_reader :request, :params, :response, :request_body
 
       # update response information with specified value
       # @arg processed [Integer, String, Array<Integer, Hash, String>] 
