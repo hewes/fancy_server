@@ -51,7 +51,13 @@ module FancyServer
         when String,NilClass then response.body << processed.to_s
         when Array
           response.status = processed[0].to_i
-          response.headers = processed[1]
+          if response.respond_to?(:headers=)
+            response.headers = processed[1]
+          else
+            processed[1].each do |key, value|
+              response[key] = value
+            end
+          end
           response.body = processed[2].respond_to?(:each) ? processed[2] : [processed[2]]
         when Hash
           response.status = processed[:status].to_i if processed.key?(:status)
