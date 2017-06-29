@@ -31,16 +31,25 @@ Example for building simple http server with REST API.
     handler.get('/foo/:bar') do
       "specified parameter for :bar is #{params[:bar]}"
     end
+    handler.post('/foo') do
+      "request_body: #{request_body}"
+    end
     server = FancyServer::RestServer.create(handler)
     server.run
-    # In default, server runs at http://0.0.0.0:8080. When specify option (same as WEBRick option) to server#run
-    # When access http://localhost:8080/, response with status 200, body is "this is top"
-    # When access http://localhost:8080/foo/test, response with status 200, body is "specified parameter for :bar is test}"
+
+In default, server runs at http://localhost:8080. When specify option (same as WEBRick option) to server#run
+When access http://localhost:8080/, response with status 200, body is "this is top"
+When access http://localhost:8080/foo/test, response with status 200, body is "specified parameter for :bar is test}"
+
+If you want to bind 0.0.0.0, pass args to `server.run` like below.
+
+    server.run(Host: "0.0.0.0", Port: 8090)
 
 ## Contributing
 
-1. Fork it ( http://github.com/hewes/fancy_server/fork )
+1. Fork it ( http://github.com/hewes/fancy\_server/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
