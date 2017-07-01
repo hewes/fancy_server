@@ -28,6 +28,14 @@ module FancyServer
         def run(options = {})
           Rack::Handler::WEBrick.run(self, options)
         end
+
+        def shutdown_with_signal(*signals)
+          signals.each do |signal|
+            Signal.trap(signal) do
+              Rack::Handler::WEBrick.shutdown
+            end
+          end
+        end
       end
     end
 
